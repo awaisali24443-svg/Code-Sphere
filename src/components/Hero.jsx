@@ -9,7 +9,7 @@ const Hero = () => {
 
   const features = [
     { icon: Code2, title: 'Code Formatter', subtitle: 'Beautify your code', delay: 0.2, active: true },
-    { icon: Palette, title: 'Color Picker', subtitle: 'HEX, RGB & HSL', delay: 0.3, active: true },
+    { icon: Palette, title: 'Color Picker', subtitle: 'HEX & RGB values', delay: 0.3, active: true },
     { icon: Type, title: 'Text Converter', subtitle: 'Transform text easily', delay: 0.4, active: true },
     { icon: Sparkles, title: 'AI Tools', subtitle: 'Coming Soon', delay: 0.5, active: false },
   ];
@@ -79,15 +79,14 @@ const Hero = () => {
           >
             {[
               { label: 'Active Tools', value: '3+' },
-              { label: 'Coming Soon', value: '15+' },
-              { label: 'Browser-Based', value: '100%' },
+              { label: 'Coming Soon', value: '19+' },
+              { label: 'No Login', value: '100%' },
             ].map((stat, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + index * 0.1 }}
-                whileHover={{ y: -5 }}
                 className={`${theme.cardBg} backdrop-blur-sm border ${theme.cardBorder} rounded-lg px-6 py-3`}
               >
                 <div className={`text-2xl font-bold ${theme.text}`}>{stat.value}</div>
