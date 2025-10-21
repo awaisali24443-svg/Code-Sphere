@@ -5,7 +5,8 @@ import {
   Search, Code, Palette, Type, Sparkles, Filter, 
   Binary, Image, FileJson, Terminal, Hash, 
   Link2, QrCode, Calculator, Clock, Database,
-  FileText, Globe, Key, Regex
+  FileText, Globe, Lock as LockIcon, Key, FileSearch,
+  Scissors, Braces, FileCode, Repeat
 } from 'lucide-react';
 import ToolCard from '../components/ToolCard';
 import CodeFormatter from '../tools/CodeFormatter';
@@ -20,7 +21,7 @@ const Tools = () => {
   const [selectedTool, setSelectedTool] = useState(null);
 
   const tools = [
-    // Active Tools
+    // ✅ ACTIVE TOOLS
     {
       id: 'code-formatter',
       icon: Code,
@@ -47,7 +48,7 @@ const Tools = () => {
       component: TextConverter,
     },
     
-    // Coming Soon Tools
+    // 🔒 COMING SOON TOOLS
     {
       id: 'ai-explainer',
       icon: Sparkles,
@@ -76,8 +77,8 @@ const Tools = () => {
     {
       id: 'json-validator',
       icon: FileJson,
-      title: 'JSON Validator',
-      description: 'Validate and format JSON data',
+      title: 'JSON Validator & Formatter',
+      description: 'Validate, format and beautify JSON data',
       category: 'Formatter',
       comingSoon: true,
     },
@@ -85,7 +86,7 @@ const Tools = () => {
       id: 'terminal-emulator',
       icon: Terminal,
       title: 'Terminal Emulator',
-      description: 'Browser-based terminal commands',
+      description: 'Browser-based command line interface',
       category: 'Developer Tools',
       comingSoon: true,
     },
@@ -117,7 +118,7 @@ const Tools = () => {
       id: 'unit-converter',
       icon: Calculator,
       title: 'Unit Converter',
-      description: 'Convert between different units',
+      description: 'Convert between different measurement units',
       category: 'Converters',
       comingSoon: true,
     },
@@ -149,7 +150,7 @@ const Tools = () => {
       id: 'lorem-ipsum',
       icon: Globe,
       title: 'Lorem Ipsum Generator',
-      description: 'Generate placeholder text',
+      description: 'Generate placeholder text for designs',
       category: 'Text Tools',
       comingSoon: true,
     },
@@ -157,15 +158,47 @@ const Tools = () => {
       id: 'password-generator',
       icon: Key,
       title: 'Password Generator',
-      description: 'Generate secure passwords',
+      description: 'Generate secure random passwords',
       category: 'Security',
       comingSoon: true,
     },
     {
       id: 'regex-tester',
-      icon: Regex,
+      icon: FileSearch,
       title: 'Regex Tester',
-      description: 'Test regular expressions',
+      description: 'Test and validate regular expressions',
+      category: 'Developer Tools',
+      comingSoon: true,
+    },
+    {
+      id: 'css-minifier',
+      icon: Scissors,
+      title: 'CSS Minifier',
+      description: 'Minify and optimize CSS code',
+      category: 'Formatter',
+      comingSoon: true,
+    },
+    {
+      id: 'html-formatter',
+      icon: Braces,
+      title: 'HTML Formatter',
+      description: 'Format and beautify HTML code',
+      category: 'Formatter',
+      comingSoon: true,
+    },
+    {
+      id: 'xml-formatter',
+      icon: FileCode,
+      title: 'XML Formatter',
+      description: 'Format and validate XML documents',
+      category: 'Formatter',
+      comingSoon: true,
+    },
+    {
+      id: 'diff-checker',
+      icon: Repeat,
+      title: 'Diff Checker',
+      description: 'Compare two text files for differences',
       category: 'Developer Tools',
       comingSoon: true,
     },
@@ -192,9 +225,8 @@ const Tools = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             onClick={() => setSelectedTool(null)}
-            className={`${theme.buttonBg} ${theme.buttonText} px-6 py-3 rounded-lg mb-6 font-semibold shadow-lg`}
+            className={`${theme.buttonBg} ${theme.buttonText} px-6 py-2 rounded-lg mb-6 font-semibold`}
           >
             ← Back to Tools
           </motion.button>
@@ -214,114 +246,4 @@ const Tools = () => {
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <h1 className={`text-4xl md:text-5xl font-bold ${theme.text} mb-4`}>
-            Developer Tools 🛠️
-          </h1>
-          <p className={`${theme.textSecondary} text-lg mb-4`}>
-            Choose from our collection of powerful utilities
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <span className={`${theme.badgeBg} border ${theme.badgeBorder} ${theme.badgeText} px-4 py-2 rounded-lg font-semibold text-sm`}>
-              ✅ {activeToolsCount} Active Tools
-            </span>
-            <span className={`${theme.badgeBg} border ${theme.badgeBorder} ${theme.badgeText} px-4 py-2 rounded-lg font-semibold text-sm`}>
-              🚀 {comingSoonCount} Coming Soon
-            </span>
-            <span className={`${theme.badgeBg} border ${theme.badgeBorder} ${theme.badgeText} px-4 py-2 rounded-lg font-semibold text-sm`}>
-              📦 {tools.length} Total
-            </span>
-          </div>
-        </motion.div>
-
-        {/* Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-6"
-        >
-          <div className="relative">
-            <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${theme.textSecondary}`} size={20} />
-            <input
-              type="text"
-              placeholder="Search tools by name or description..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={`w-full ${theme.inputBg} ${theme.inputText} ${theme.inputPlaceholder} border ${theme.inputBorder} rounded-lg pl-12 pr-4 py-4 focus:outline-none focus:ring-2 focus:ring-current`}
-            />
-          </div>
-        </motion.div>
-
-        {/* Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap gap-3 mb-8"
-        >
-          <div className={`flex items-center gap-2 ${theme.text}`}>
-            <Filter size={20} />
-            <span className="font-semibold">Filter:</span>
-          </div>
-          {filters.map((filter) => (
-            <motion.button
-              key={filter}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                activeFilter === filter
-                  ? `${theme.buttonBg} ${theme.buttonText} shadow-lg`
-                  : `${theme.cardBg} ${theme.text} border ${theme.cardBorder}`
-              }`}
-            >
-              {filter}
-            </motion.button>
-          ))}
-        </motion.div>
-
-        {/* Tools Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {filteredTools.map((tool, index) => (
-            <motion.div
-              key={tool.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 * index }}
-            >
-              <ToolCard
-                icon={tool.icon}
-                title={tool.title}
-                description={tool.description}
-                comingSoon={tool.comingSoon}
-                badge={tool.badge}
-                onClick={() => tool.component && setSelectedTool(tool)}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {filteredTools.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className={`text-center py-12 ${theme.cardBg} border ${theme.cardBorder} rounded-xl`}
-          >
-            <p className={`text-xl ${theme.text} mb-2`}>No tools found</p>
-            <p className={theme.textSecondary}>Try adjusting your search or filter criteria.</p>
-          </motion.div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default Tools;
+          animate={{ opacity: 1, 
