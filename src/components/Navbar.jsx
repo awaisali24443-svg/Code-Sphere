@@ -23,19 +23,7 @@ const Navbar = () => {
   useEffect(() => {
     // Close mobile menu on route change
     setIsMobileMenuOpen(false);
-  }, [location]);
-
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isMobileMenuOpen]);
+  }, [location.pathname]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -48,7 +36,7 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5, type: 'spring', stiffness: 100 }}
+      transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled ? `${theme.navBg} backdrop-blur-md shadow-lg border-b ${theme.cardBorder}` : 'bg-transparent'
       }`}
@@ -80,7 +68,7 @@ const Navbar = () => {
                 to={link.path}
                 className={`px-4 py-2 rounded-lg font-medium transition-all ${
                   location.pathname === link.path
-                    ? `${theme.buttonBg} ${theme.buttonText} shadow-lg`
+                    ? `${theme.buttonBg} ${theme.buttonText}`
                     : `${theme.text} hover:bg-opacity-10 hover:bg-current`
                 }`}
               >
@@ -99,6 +87,7 @@ const Navbar = () => {
               className={`p-2 rounded-lg ${theme.text}`}
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.button>
@@ -110,6 +99,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
