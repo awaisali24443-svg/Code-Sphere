@@ -14,7 +14,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate initial loading
+    // Simulate initial loading and resource preparation
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1800);
@@ -31,12 +31,15 @@ function App() {
           ) : (
             <div key="app" className="min-h-screen">
               <Navbar />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/tools" element={<Tools />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-              </Routes>
+              <main>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/tools" element={<Tools />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="*" element={<Home />} />
+                </Routes>
+              </main>
               <Footer />
             </div>
           )}
