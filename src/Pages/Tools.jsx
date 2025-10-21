@@ -246,4 +246,111 @@ const Tools = () => {
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, 
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <h1 className={`text-4xl md:text-5xl font-bold ${theme.text} mb-4`}>
+            Developer Tools 🛠️
+          </h1>
+          <p className={`${theme.textSecondary} text-lg mb-4`}>
+            Choose from our collection of powerful utilities
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <span className={`${theme.badgeBg} border ${theme.badgeBorder} ${theme.badgeText} px-4 py-2 rounded-lg font-semibold`}>
+              {activeToolsCount} Active Tools
+            </span>
+            <span className={`${theme.badgeBg} border ${theme.badgeBorder} ${theme.badgeText} px-4 py-2 rounded-lg font-semibold`}>
+              {comingSoonCount} Coming Soon
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-6"
+        >
+          <div className="relative">
+            <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${theme.textSecondary}`} size={20} />
+            <input
+              type="text"
+              placeholder="Search tools..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={`w-full ${theme.inputBg} ${theme.inputText} border ${theme.inputBorder} rounded-lg pl-12 pr-4 py-4 focus:outline-none focus:ring-2 focus:ring-current`}
+            />
+          </div>
+        </motion.div>
+
+        {/* Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="flex flex-wrap gap-3 mb-8"
+        >
+          <div className={`flex items-center gap-2 ${theme.text}`}>
+            <Filter size={20} />
+            <span className="font-semibold">Filter:</span>
+          </div>
+          {filters.map((filter) => (
+            <motion.button
+              key={filter}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setActiveFilter(filter)}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                activeFilter === filter
+                  ? `${theme.buttonBg} ${theme.buttonText}`
+                  : `${theme.cardBg} ${theme.text} border ${theme.cardBorder}`
+              }`}
+            >
+              {filter}
+            </motion.button>
+          ))}
+        </motion.div>
+
+        {/* Tools Grid */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {filteredTools.map((tool, index) => (
+            <motion.div
+              key={tool.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 * index }}
+            >
+              <ToolCard
+                icon={tool.icon}
+                title={tool.title}
+                description={tool.description}
+                comingSoon={tool.comingSoon}
+                badge={tool.badge}
+                onClick={() => tool.component && setSelectedTool(tool)}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {filteredTools.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className={`text-center py-12 ${theme.text}`}
+          >
+            <p className="text-xl mb-2">No tools found matching your search.</p>
+            <p className={theme.textSecondary}>Try adjusting your search or filter criteria.</p>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Tools;
